@@ -306,6 +306,28 @@ createjs.Container.prototype.setCenterContainer = function(regX, regY){
     return this;
 };
 
+createjs.Bitmap.prototype.sheen = function(delay, time){
+    if(!delay){delay = 500;}
+    if(!time){time = 1000;}
 
+    mask = new createjs.Shape();
+    mask.regX = this.regX;
+    mask.regy = this.regY;
+    mask.x = this.x;
+    mask.y = this.y - this.image.height/2;
+    mask.graphics.beginFill('black').drawRoundRect(0, 0, this.image.width, this.image.height, 0);
+
+    imgSheen = new createjs.Shape();
+    imgSheen.graphics.beginLinearGradientFill(['rgba(255,255,255,0)', '#fff', 'rgba(255,255,255,0)'], [0, 0.5, 1], 0, 0, 100, 0).drawRect(0, 0, this.image.width * 2, this.image.height * 3);
+    imgSheen.regX = this.regX;
+    imgSheen.regY = this.regY;
+    imgSheen.x = -stage.canvas.width;
+    imgSheen.y = this.y - this.image.height/2;
+    imgSheen.rotation = 18;
+    imgSheen.alpha = 0.8;
+    imgSheen.mask = mask;
+    this.parent.addChild(imgSheen);
+    createjs.Tween.get(imgSheen).wait(delay).to({x: stage.canvas.width * 2 }, time, createjs.Ease.getPowOut(2));
+};
 
 createjs.Container.prototype.setPositions = createjs.Sprite.prototype.setPositions = createjs.Bitmap.prototype.setPositions;
