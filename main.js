@@ -218,7 +218,7 @@ function createiItemsFrameThree(){
 
 function animationFrameThree(){
 
- }
+}
 
 function createFrameFour(){
     createiItemsFrameFour();
