@@ -213,12 +213,12 @@ function createFrameThree(){
 }
 
 function createiItemsFrameThree(){
-    frame3Container.addChild(ß);
+    frame3Container.addChild();
 }
 
 function animationFrameThree(){
 
- ß}
+ }
 
 function createFrameFour(){
     createiItemsFrameFour();
