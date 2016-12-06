@@ -5,6 +5,7 @@ This is a base to create a banner from scratch. This template are using createJs
 ### Adapt banner size
 
 To change the size of the banner you need to modify:
+
     * Index.html
     * Main.css
     * Main.js - Check num 1
