@@ -35,3 +35,12 @@ You have 2 close button legals
 To chose one of them you just need to add in the dynamic Content in the main.js the following line:
 
     devDynamicContent.Application_NxN[0].Legal_copy_close = 'Your text here';
+## Move the legals label
+
+To be available to move the legals lables you just need to modify the CSS. 
+
+   * Left property
+   * Right property
+   * Font-size
+   * Height
+   * Width
