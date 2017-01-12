@@ -180,16 +180,16 @@ var timeFrame4 = 4000;
 function startAdvert() {
     createSkyIcons();
     createFrameOne();
-    /*
-        setTimeout(Frame1_Clean, timeFrame1);
-        setTimeout(Frame2_Create, timeFrame1);
-        setTimeout(Frame2_Clean, timeFrame1 + timeFrame2);
-        setTimeout(Frame3_Create, timeFrame1 + timeFrame2);
-        setTimeout(Frame3_Clean, timeFrame1 + timeFrame2 + timeFrame3);
-        setTimeout(Frame4_Create, timeFrame1 + timeFrame2 + timeFrame3);
-        setTimeout(Frame4_Clean, timeFrame1 + timeFrame2 + timeFrame3 + timeFrame4);
-        setTimeout(Frame5_Create, timeFrame1 + timeFrame2 + timeFrame3 + timeFrame4);
-    */
+
+    setTimeout(Frame1_Clean, timeFrame1);
+    setTimeout(Frame2_Create, timeFrame1);
+    setTimeout(Frame2_Clean, timeFrame1 + timeFrame2);
+    setTimeout(Frame3_Create, timeFrame1 + timeFrame2);
+    setTimeout(Frame3_Clean, timeFrame1 + timeFrame2 + timeFrame3);
+    setTimeout(Frame4_Create, timeFrame1 + timeFrame2 + timeFrame3);
+    setTimeout(Frame4_Clean, timeFrame1 + timeFrame2 + timeFrame3 + timeFrame4);
+    setTimeout(Frame5_Create, timeFrame1 + timeFrame2 + timeFrame3 + timeFrame4);
+
 }
 
 function createSkyIcons() {
@@ -199,6 +199,7 @@ function createSkyIcons() {
 
     skyContainer.addChild(logo);
 }
+
 
 function Frame1_Clean() {
     frame1_container.opacity = 0;
@@ -221,7 +222,7 @@ function createFrameOne() {
     Frame1_animation();
 }
 
-// Frames' set-up and animation
+// Frames' set-up and animation.
 function Frame1_CreateItems() {
     frame1_image = new createjs.Bitmap(queue.getResult('frame1_image'));
 
@@ -252,7 +253,7 @@ function Frame1_animation() {
     createjs.Tween.get(frame1_txt).to({ alpha: 1 });
     frame1_txt.sheen(2000, 3000);
 
-    //createjs.Tween.get(frame1_container).wait(timeFrame1 ).to({ alpha: 0 });
+    createjs.Tween.get(frame1_container).wait(timeFrame1).to({ alpha: 0 });
 }
 
 function Frame2_Create() {
@@ -261,7 +262,7 @@ function Frame2_Create() {
 }
 
 function Frame2_CreateItems() {
-    frame2_container.addChild(frame1_image);
+    frame2_container.addChild();
 }
 
 function Frame2_animation() {
@@ -274,7 +275,7 @@ function Frame3_Create() {
 }
 
 function Frame3_CreateItems() {
-    frame3_container.addChild(frame1_image);
+    frame3_container.addChild();
 }
 
 function Frame3_animation() {
@@ -287,7 +288,7 @@ function Frame4_Create() {
 }
 
 function Frame4_CreateItems() {
-    frame4_container.addChild(frame1_image);
+    frame4_container.addChild();
 }
 
 function Frame4_animation() {
@@ -300,7 +301,7 @@ function Frame5_Create() {
 }
 
 function Frame5_CreateItems() {
-    frame5_container.addChild(frame1_image);
+    frame5_container.addChild();
 }
 
 function Frame5_animation() {
