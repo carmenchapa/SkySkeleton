@@ -1,0 +1,78 @@
+
+.legal-label {
+	color: rgb(0,0,0);
+	font-family: 'SkyTextRegular', 'sky-text-regular', 'nowtv-regular';
+	font-size: 10px;
+	height: 15px;
+    margin: 0 auto;
+	margin-top: 3px;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	position: absolute;
+    text-align: center;
+    width: 65px;
+    z-index: 5;
+}
+#legal {
+	border-top: 1px solid rgb(0,0,0);
+    border-bottom: 1px solid rgb(0,0,0);
+	position: absolute;
+	top:600px;
+	z-index: 12;
+	width: 100%;
+	height: auto;
+	background-color: rgb(255,255,255);
+	background-color: rgba(255,255,255,1);
+	overflow: auto;
+	display: none;
+}
+
+#legal .legal-copy {
+	color: rgb(0,0,0);
+	font-family: 'SkyTextRegular', 'sky-text-regular', 'nowtv-regular';
+	font-size: 10px;
+	margin: 0;
+	top:1px;
+	word-wrap: break-word;
+	border-left: 1px solid rgb(0,0,0);
+	border-right: 1px solid rgb(0,0,0);
+
+}
+
+#legal .legal-copy strong {
+	font-weight: bold;
+}
+
+.close-button {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	background-color: transparent;
+	font-family: 'SkyTextRegular', 'sky-text-regular' , 'nowtv-regular';
+	font-size: 16px;
+	width: 17px;
+	height: 16px;
+	padding: 1px 1px 2px 1px;
+	background-color: rgb(0,0,0);
+	border-radius: 50%;
+	color:rgb(255,255,255);
+	text-align: center;
+	z-index: 50;
+	cursor:pointer;
+}
+
+.hide-legals{
+	font-size: 10px;
+	position: relative;;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: transparent;
+	font-family: 'SkyTextRegular', 'sky-text-regular' , 'nowtv-regular';
+	padding: 5px 1px 5px 1px;
+	border-radius: 50%;
+	text-align: center;
+	z-index: 50;
+	cursor:pointer;
+}
