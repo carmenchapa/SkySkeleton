@@ -36,11 +36,15 @@ var numberID = 1234564789;
 
 #### Upload and use assets
 1. Update the link to the asset folder:
+
+* _Note: In order for the preview to work once the creative is uploaded to Double Click, the feed needs to be have been published at least once._
+
   ```javascript
   devDynamicContent.Application_NxN[0].Image_assets = 'https://s0.2mdn.net/ads/richmedia/studio/NumberForlder/';
   ```
 
 2. Update the `queue.loadManifest([])` in `loadAssets()` function:
+
   ```javascript
   queue.loadManifest([
         // {id:'', src:''},
@@ -49,6 +53,7 @@ var numberID = 1234564789;
   ```
 
 3. Use the assets:
+
   ```javascript
   asset = new createjs.Bitmap(queue.getResult('asset'));
   ```
@@ -101,8 +106,6 @@ var numberID = 1234564789;
     image.sheen(2000, 3000);
     ```
 
-3. Still under development
-
 <!-- Add extra value for position to the left with arguments -->
 #### Small live text with logo in the bottom right corner of an image
 ##### `createTx(image, logo, text)`
@@ -113,10 +116,6 @@ var numberID = 1234564789;
   * Bitmap image.
   * The logo should __not__ have any empty transparent pixels on all sides.
 3. Text parameter
-
-<!-- DeFault line-height: 13px;
-    z-index: 2;
-    text-align: right; values -->
 
   * Update\Add the live text in the Dynamic Profile:
 
@@ -143,17 +142,17 @@ var numberID = 1234564789;
   '<span style="line-height: 18px;"></span><br><span>Example Title<br>Example Season<br></span><span style="line-height: 22px; font-size: 20px;">Example Availability</span>'
   ```
 
-4. Still under development
-
 #### Legals
 ###### There are _two_ legal close button options - Circle X Button Icon and 'Hide Legals' Text:
 * Index.html 
     * Circle X button icon is set by __default__. So, if you want to use this icon either delete the following line or set it to be equal to an empty string:
+
     ```javascript
     devDynamicContent.Application_NxN[0].Legal_copy_close = '';
     ```
 
     * To use 'Hide legals' text, add by the following line.
+    
     ```javascript
     devDynamicContent.Application_NxN[0].Legal_copy_close = 'Hide Legals';
     ```
