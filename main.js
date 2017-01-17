@@ -102,7 +102,7 @@ function createPreloader() {
     queue.addEventListener('complete', loadComplete);
     queue.loadManifest([
         // {id:'', src:''},
-        { id: 'logo', src: 'logo.png'},
+        { id: 'logo', src: 'logo.png' },
         { id: 'frame1_image', src: 'frame1_image.png' },
         { id: 'frame1_logo', src: 'frame1_logo.png' },
         { id: 'text', src: 'text.png' }
@@ -226,9 +226,9 @@ function Frame2_CreateItems() {
 }
 
 function Frame2_animation() {
-    createjs.Tween.get(frame2_container).to({alpha:1});
+    createjs.Tween.get(frame2_container).to({ alpha: 1 });
 
-    createjs.Tween.get(frame2_container).wait(timeFrame2).to({alpha:0});
+    createjs.Tween.get(frame2_container).wait(timeFrame2).to({ alpha: 0 });
 }
 
 function Frame3_Create() {
@@ -241,9 +241,9 @@ function Frame3_CreateItems() {
 }
 
 function Frame3_animation() {
-    createjs.Tween.get(frame3_container).to({alpha:1});
+    createjs.Tween.get(frame3_container).to({ alpha: 1 });
 
-    createjs.Tween.get(frame3_container).wait(timeFrame3).to({alpha:0});
+    createjs.Tween.get(frame3_container).wait(timeFrame3).to({ alpha: 0 });
 }
 
 function Frame4_Create() {
@@ -256,9 +256,10 @@ function Frame4_CreateItems() {
 }
 
 function Frame4_animation() {
-  createjs.Tween.get(frame4_container).to({alpha:1});
+    createjs.Tween.get(frame4_container).to({ alpha: 1 });
 
-  createjs.Tween.get(frame4_container).wait(timeFrame3).to({alpha:0});}
+    createjs.Tween.get(frame4_container).wait(timeFrame3).to({ alpha: 0 });
+}
 
 function Frame5_Create() {
     Frame5_CreateItems();
@@ -270,12 +271,12 @@ function Frame5_CreateItems() {
 }
 
 function Frame5_animation() {
-    createjs.Tween.get(frame5_container).to({alpha:1});
+    createjs.Tween.get(frame5_container).to({ alpha: 1 });
 }
 
 
 /* CLEAN FUNCTIONS */
-/* Don't change these funciton. If you need to do a transition do
+/* Don't change these functions. If you need to do a transition do
    it with alpha in the frame animation function.
    Last frame don't have clean function */
 
@@ -360,7 +361,7 @@ createjs.Container.prototype.setRegPoints = function(regX, regY) {
 
 createjs.Container.prototype.setPositions = createjs.Sprite.prototype.setPositions = createjs.Bitmap.prototype.setPositions;
 
-createjs.Container.prototype.dynamicTxd  = function(image, logo, text){
+createjs.Container.prototype.dynamicTxd = function(image, logo, text) {
     var TXTextContainer = new createjs.Container();
     TXTextContainer.setBounds(0, 0, image.image.width, image.image.height);
 
@@ -394,34 +395,34 @@ createjs.Bitmap.prototype.sheen = function(delay, time) {
     if (!time) { time = 1000; }
 
     var imageClone = this.clone();
-    imageClone.cache(0,0, this.image.width, this.image.height);
+    imageClone.cache(0, 0, this.image.width, this.image.height);
 
     var sheenContainer = new createjs.Container();
-    sheenContainer.setBounds(0,0,this.image.width, this.image.height);
+    sheenContainer.setBounds(0, 0, this.image.width, this.image.height);
     sheenContainer.regX = this.regX;
     sheenContainer.regY = this.regY;
     sheenContainer.x = this.x;
     sheenContainer.y = this.y;
     sheenContainer.filters = [new createjs.AlphaMaskFilter(imageClone.cacheCanvas)];
-    sheenContainer.cache(0,0,sheenContainer.getBounds().width, sheenContainer.getBounds().height);
+    sheenContainer.cache(0, 0, sheenContainer.getBounds().width, sheenContainer.getBounds().height);
 
     var sheenLine = new createjs.Shape();
-    sheenLine.graphics.beginLinearGradientFill(['transparent','rgba(255,255,255,0.5)', '#fff', 'rgba(255,255,255,0.5)','transparent'], [0.3,0.4,0.5,0.6,0.75],0,0, this.image.width*2, this.image.height).drawRect(0,0,this.image.width*2, this.image.height);
+    sheenLine.graphics.beginLinearGradientFill(['transparent', 'rgba(255,255,255,0.5)', '#fff', 'rgba(255,255,255,0.5)', 'transparent'], [0.3, 0.4, 0.5, 0.6, 0.75], 0, 0, this.image.width * 2, this.image.height).drawRect(0, 0, this.image.width * 2, this.image.height);
     sheenLine.alpha = 1;
-    sheenLine.x = -sheenContainer.getBounds().width*2;
-    sheenLine.cache(0,0, this.image.width*2, this.image.height);
+    sheenLine.x = -sheenContainer.getBounds().width * 2;
+    sheenLine.cache(0, 0, this.image.width * 2, this.image.height);
 
 
     sheenContainer.addChild(sheenLine);
 
     sheenLine.addEventListener('tick', cacheContainer);
 
-    function cacheContainer(){
-       sheenContainer.cache(0,0,sheenContainer.getBounds().width, sheenContainer.getBounds().height);
-       sheenLine.cache(0,0,sheenContainer.getBounds().width*2, sheenContainer.getBounds().height);
+    function cacheContainer() {
+        sheenContainer.cache(0, 0, sheenContainer.getBounds().width, sheenContainer.getBounds().height);
+        sheenLine.cache(0, 0, sheenContainer.getBounds().width * 2, sheenContainer.getBounds().height);
     }
 
-    createjs.Tween.get(sheenLine).wait(delay).to({alpha:1}).to({x: sheenContainer.x*2}, time, createjs.Ease.sineOut).call(function(){
+    createjs.Tween.get(sheenLine).wait(delay).to({ alpha: 1 }).to({ x: sheenContainer.x * 2 }, time, createjs.Ease.sineOut).call(function() {
         sheenContainer.removeEventListener('tick', cacheContainer, false);
         sheenContainer.parent.removeChild(sheenContainer);
     });
