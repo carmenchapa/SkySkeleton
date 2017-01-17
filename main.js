@@ -211,6 +211,7 @@ function Frame1_CreateItems() {
 function Frame1_animation() {
     createjs.Tween.get(skyContainer).to({ alpha: 1 });
     frame1_txt.sheen(500, 3000);
+    frame1_txt.sheen(3000, 3000, false);
     createjs.Tween.get(frame1_container).wait(timeFrame1).to({ alpha: 0 });
 }
 
@@ -391,24 +392,35 @@ createjs.Bitmap.prototype.sheen = function(delay, time) {
     if (!delay) { delay = 500; }
     if (!time) { time = 1000; }
 
-    console.log(arguments);
-    var imageClone = this.clone();
-    imageClone.cache(0,0, this.image.width, this.image.height);
-
     var sheenContainer = new createjs.Container();
     sheenContainer.setBounds(0,0,this.image.width, this.image.height);
-    sheenContainer.regX = this.regX;
-    sheenContainer.regY = this.regY;
-    sheenContainer.x = this.x;
-    sheenContainer.y = this.y;
-    sheenContainer.filters = [new createjs.AlphaMaskFilter(imageClone.cacheCanvas)];
+    sheenContainer.setRegPoints(this.regX, this.regY);
+    sheenContainer.setPositions(this.x, this.y);
+
+    if(this instanceof createjs.Bitmap){
+        var imageClone = this.clone();
+        imageClone.cache(0,0, this.image.width, this.image.height);
+        sheenContainer.filters = [new createjs.AlphaMaskFilter(imageClone.cacheCanvas)];
+    }
+
     sheenContainer.cache(0,0,sheenContainer.getBounds().width, sheenContainer.getBounds().height);
 
     var sheenLine = new createjs.Shape();
-    sheenLine.graphics.beginLinearGradientFill(['transparent','rgba(255,255,255,0.5)', '#fff', 'rgba(255,255,255,0.5)','transparent'], [0.3,0.4,0.5,0.6,0.75],0,0, this.image.width*2, this.image.height).drawRect(0,0,this.image.width*2, this.image.height);
     sheenLine.alpha = 1;
     sheenLine.x = -sheenContainer.getBounds().width*2;
-    sheenLine.cache(0,0, this.image.width*2, this.image.height);
+
+    if(!arguments[2] && typeof arguments[2] === 'boolean' && arguments[2] === false){
+        sheenLine.graphics.beginFill(['#fff']).drawRect(0,0,10, this.image.height*2);
+        sheenLine.rotation = 18;
+        sheenLine.y = -10;
+        sheenLine.cache(0,0, this.image.width*2, this.image.height*2);
+        sheenContainer.filters = [];
+
+    } else {
+        sheenLine.graphics.beginLinearGradientFill(['transparent','rgba(255,255,255,0.5)', '#fff', 'rgba(255,255,255,0.5)','transparent'], [0.3,0.4,0.5,0.6,0.75],0,0, this.image.width*2, this.image.height).drawRect(0,0,this.image.width*2, this.image.height);
+        sheenLine.cache(0,0, this.image.width*2, this.image.height);
+    }
+
 
 
     sheenContainer.addChild(sheenLine);
@@ -417,7 +429,7 @@ createjs.Bitmap.prototype.sheen = function(delay, time) {
 
     function cacheContainer(){
        sheenContainer.cache(0,0,sheenContainer.getBounds().width, sheenContainer.getBounds().height);
-       sheenLine.cache(0,0,sheenContainer.getBounds().width*2, sheenContainer.getBounds().height);
+       sheenLine.cache(0,0,sheenContainer.getBounds().width*2, sheenContainer.getBounds().height*2);
     }
 
     createjs.Tween.get(sheenLine).wait(delay).to({alpha:1}).to({x: sheenContainer.x*2}, time, createjs.Ease.sineOut).call(function(){
