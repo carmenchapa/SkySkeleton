@@ -21,7 +21,7 @@ function createLegals() {
 		close.innerHTML = data.Legal_copy_close;
 	}
 	document.querySelector('#legal>p').appendChild(close);
-	document.getElementById('legals').style.display = 'block';
+	document.getElementById('legal').style.display = 'block';
 }
 
 function _handleLabelContainerClick(event) {

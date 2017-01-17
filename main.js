@@ -211,8 +211,6 @@ function Frame1_CreateItems() {
 function Frame1_animation() {
     createjs.Tween.get(skyContainer).to({ alpha: 1 });
     frame1_txt.sheen(500, 3000);
-    frame1_txt.sheen2(4000, 1500);
-
     createjs.Tween.get(frame1_container).wait(timeFrame1).to({ alpha: 0 });
 }
 
@@ -360,7 +358,7 @@ createjs.Container.prototype.setRegPoints = function(regX, regY) {
 
 createjs.Container.prototype.setPositions = createjs.Sprite.prototype.setPositions = createjs.Bitmap.prototype.setPositions;
 
-createjs.Container.prototype.dynamicTxd  = function(image, logo, text){
+createjs.Container.prototype.dynamicText  = function(image, logo, text){
     var TXTextContainer = new createjs.Container();
     TXTextContainer.setBounds(0, 0, image.image.width, image.image.height);
 
@@ -393,6 +391,7 @@ createjs.Bitmap.prototype.sheen = function(delay, time) {
     if (!delay) { delay = 500; }
     if (!time) { time = 1000; }
 
+    console.log(arguments);
     var imageClone = this.clone();
     imageClone.cache(0,0, this.image.width, this.image.height);
 
