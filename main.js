@@ -78,15 +78,12 @@ function setDynamicProfile() {
     devDynamicContent.Application_NxN = [{}];
     devDynamicContent.Application_NxN[0]._id = 0;
     devDynamicContent.Application_NxN[0].Reporting_Label = "Reporting Label";
-    devDynamicContent.Application_NxN[0].Image_assets = "https://s0.2mdn.net/ads/richmedia/studio/Folder_Num";
-    // ReadMe: In order for this to work the feed needs to be published once.
-
-    // ReadMe: TX component, first span line height as big as the logo height;
-    devDynamicContent.Application_NxN[0].frame1_tx_small = '<span style="line-height: 18px;"></span><br><span>Show Title</span><br><span>Season</span><br><span>Avalability</span>';
+    // devDynamicContent.Application_NxN[0].Image_assets = "https://s0.2mdn.net/ads/richmedia/studio/Folder_Num";
+    devDynamicContent.Application_NxN[0].Image_assets = "img/";
+    devDynamicContent.Application_NxN[0].frame1_tx_small = '<span style="line-height: 18px;"></span><br><span>Fortitude: Series 2<br>Now showing</span>';
     devDynamicContent.Application_NxN[0].Click_Tag = "https://www.sky.com";
     devDynamicContent.Application_NxN[0].Legal_button_copy = 'Legal bits';
     devDynamicContent.Application_NxN[0].Legal_copy = 'Write legals text here';
-    /* This line is optional. It is use to add Hide legals button inted of the closing circle*/
     /*devDynamicContent.Application_NxN[0].Legal_copy_close = '';*/
 
     Enabler.setDevDynamicContent(devDynamicContent);
@@ -97,12 +94,12 @@ function setDynamicProfile() {
 }
 
 function createPreloader() {
-    var path = window.location.host.search('localhost') != -1 ? 'img/' : data.content;
+    var path = window.location.host.search('localhost') != -1 ? 'img/' : data.Image_assets;
     queue = new createjs.LoadQueue('true', path);
     queue.addEventListener('complete', loadComplete);
     queue.loadManifest([
         // {id:'', src:''},
-        { id: 'logo', src: 'logo.png'},
+        { id: 'logo', src: 'logo.png' },
         { id: 'frame1_image', src: 'frame1_image.png' },
         { id: 'frame1_logo', src: 'frame1_logo.png' },
         { id: 'text', src: 'text.png' }
@@ -198,7 +195,8 @@ function Frame1_CreateItems() {
     frame1_logo = new createjs.Bitmap(queue.getResult('frame1_logo'));
     frame1_image = new createjs.Bitmap(queue.getResult('frame1_image'));
 
-    frame1_container.dynamicText(frame1_image, frame1_logo, data.frame1_tx_small);
+    frame1_container.dynamicTx(frame1_image, frame1_logo, data.frame1_tx_small);
+    // frame1_container.dynamicTx(frame1_image, frame1_logo, data.frame1_tx_small, 10, 10);
 
     frame1_txt = new createjs.Bitmap(queue.getResult('text'));
     frame1_txt.setRegPoints('center', 'center');
@@ -225,9 +223,9 @@ function Frame2_CreateItems() {
 }
 
 function Frame2_animation() {
-    createjs.Tween.get(frame2_container).to({alpha:1});
+    createjs.Tween.get(frame2_container).to({ alpha: 1 });
 
-    createjs.Tween.get(frame2_container).wait(timeFrame2).to({alpha:0});
+    createjs.Tween.get(frame2_container).wait(timeFrame2).to({ alpha: 0 });
 }
 
 function Frame3_Create() {
@@ -240,9 +238,9 @@ function Frame3_CreateItems() {
 }
 
 function Frame3_animation() {
-    createjs.Tween.get(frame3_container).to({alpha:1});
+    createjs.Tween.get(frame3_container).to({ alpha: 1 });
 
-    createjs.Tween.get(frame3_container).wait(timeFrame3).to({alpha:0});
+    createjs.Tween.get(frame3_container).wait(timeFrame3).to({ alpha: 0 });
 }
 
 function Frame4_Create() {
@@ -255,9 +253,10 @@ function Frame4_CreateItems() {
 }
 
 function Frame4_animation() {
-  createjs.Tween.get(frame4_container).to({alpha:1});
+    createjs.Tween.get(frame4_container).to({ alpha: 1 });
 
-  createjs.Tween.get(frame4_container).wait(timeFrame3).to({alpha:0});}
+    createjs.Tween.get(frame4_container).wait(timeFrame3).to({ alpha: 0 });
+}
 
 function Frame5_Create() {
     Frame5_CreateItems();
@@ -269,15 +268,11 @@ function Frame5_CreateItems() {
 }
 
 function Frame5_animation() {
-    createjs.Tween.get(frame5_container).to({alpha:1});
+    createjs.Tween.get(frame5_container).to({ alpha: 1 });
 }
 
 
 /* CLEAN FUNCTIONS */
-/* Don't change these funciton. If you need to do a transition do
-   it with alpha in the frame animation function.
-   Last frame don't have clean function */
-
 function Frame1_Clean() {
     frame1_container.opacity = 0;
 }
@@ -311,7 +306,6 @@ createjs.Bitmap.prototype.setPositions = function(x, y) {
     if (y === 'Center' || y === 'center') {
         if (this.regY !== 0) {
             this.y = Math.floor(middleCanvasHeight);
-
         } else {
             this.y = Math.floor(middleCanvasHeight - this.image.height / 2);
         }
@@ -359,31 +353,38 @@ createjs.Container.prototype.setRegPoints = function(regX, regY) {
 
 createjs.Container.prototype.setPositions = createjs.Sprite.prototype.setPositions = createjs.Bitmap.prototype.setPositions;
 
-createjs.Container.prototype.dynamicText  = function(image, logo, text){
+createjs.Container.prototype.dynamicTx = function(image, logo, text) {
     var TXTextContainer = new createjs.Container();
     TXTextContainer.setBounds(0, 0, image.image.width, image.image.height);
 
-    var separationFromLogo = 4;
 
     var TXHtmlElment = document.createElement("p");
     TXHtmlElment.classList.add('txProperties');
     TXHtmlElment.innerHTML = text;
-    document.getElementById("advert").appendChild(TXHtmlElment);
+    TXHtmlElment.style.width = TXTextContainer.getBounds().width + 'px';
 
-    // POSITION TX AND LOGO TX
-    var separationX = 6;
-    var separationY = 4;
+    document.getElementById("advert").appendChild(TXHtmlElment);
 
     var TXTextdomElement = new createjs.DOMElement(TXHtmlElment);
     TXTextdomElement.setBounds(0, 0, TXHtmlElment.clientWidth, TXHtmlElment.clientHeight);
-    logo.regX = logo.image.width;
-    TXTextdomElement.regX = TXTextdomElement.getBounds().width;
-    logo.y = TXTextdomElement.y = image.image.height - TXTextdomElement.getBounds().height - separationY;
-    logo.x = TXTextdomElement.x = image.image.width - separationX;
     TXTextContainer.addChild(TXTextdomElement, logo);
 
+    // POSITION TX AND LOGO TX
+    if (arguments[3] && arguments[4]) {
+        if (typeof arguments[3] !== 'number' || typeof arguments[4] !== 'number') {
+            console.warn('"x" and "y" in dynamicTx() should be numbers');
+        }
+        logo.y = TXTextdomElement.y = TXTextContainer.getBounds().height - TXTextdomElement.getBounds().height - arguments[4];
+        logo.x = TXTextContainer.getBounds().width - logo.image.width - arguments[3];
+        TXTextdomElement.x = -arguments[3];
+    } else if (!arguments[3] && !arguments[4]) {
+        logo.y = TXTextdomElement.y = TXTextContainer.getBounds().height - TXTextdomElement.getBounds().height - 4;
+        logo.x = TXTextContainer.getBounds().width - logo.image.width - 6;
+        TXTextdomElement.x = -6;
+    }
+
     imageContainer = new createjs.Container();
-    imageContainer.setBounds(0, 0, image.image.width, image.image.height);
+    imageContainer.setBounds(0, 0, canvasWidth, canvasHeight);
     imageContainer.addChild(image, TXTextContainer);
     this.addChild(imageContainer);
 };
@@ -393,46 +394,44 @@ createjs.Bitmap.prototype.sheen = function(delay, time) {
     if (!time) { time = 1000; }
 
     var sheenContainer = new createjs.Container();
-    sheenContainer.setBounds(0,0,this.image.width, this.image.height);
+    sheenContainer.setBounds(0, 0, this.image.width, this.image.height);
     sheenContainer.setRegPoints(this.regX, this.regY);
     sheenContainer.setPositions(this.x, this.y);
 
-    if(this instanceof createjs.Bitmap){
+    if (this instanceof createjs.Bitmap) {
         var imageClone = this.clone();
-        imageClone.cache(0,0, this.image.width, this.image.height);
+        imageClone.cache(0, 0, this.image.width, this.image.height);
         sheenContainer.filters = [new createjs.AlphaMaskFilter(imageClone.cacheCanvas)];
     }
 
-    sheenContainer.cache(0,0,sheenContainer.getBounds().width, sheenContainer.getBounds().height);
+    sheenContainer.cache(0, 0, sheenContainer.getBounds().width, sheenContainer.getBounds().height);
 
     var sheenLine = new createjs.Shape();
     sheenLine.alpha = 1;
-    sheenLine.x = -sheenContainer.getBounds().width*2;
+    sheenLine.x = -sheenContainer.getBounds().width * 2;
 
-    if(!arguments[2] && typeof arguments[2] === 'boolean' && arguments[2] === false){
-        sheenLine.graphics.beginFill(['#fff']).drawRect(0,0,10, this.image.height*2);
+    if (typeof arguments[2] === 'boolean' && arguments[2] === false) {
+        sheenLine.graphics.beginFill('white').drawRect(0, 0, 10, this.image.height * 2);
         sheenLine.rotation = 18;
         sheenLine.y = -10;
-        sheenLine.cache(0,0, this.image.width*2, this.image.height*2);
+        sheenLine.cache(0, 0, this.image.width * 2, this.image.height * 2);
         sheenContainer.filters = [];
 
     } else {
-        sheenLine.graphics.beginLinearGradientFill(['transparent','rgba(255,255,255,0.5)', '#fff', 'rgba(255,255,255,0.5)','transparent'], [0.3,0.4,0.5,0.6,0.75],0,0, this.image.width*2, this.image.height).drawRect(0,0,this.image.width*2, this.image.height);
-        sheenLine.cache(0,0, this.image.width*2, this.image.height);
+        sheenLine.graphics.beginLinearGradientFill(['transparent', 'rgba(255,255,255,0.5)', '#fff', 'rgba(255,255,255,0.5)', 'transparent'], [0.3, 0.4, 0.5, 0.6, 0.75], 0, 0, this.image.width * 2, this.image.height).drawRect(0, 0, this.image.width * 2, this.image.height);
+        sheenLine.cache(0, 0, this.image.width * 2, this.image.height);
     }
-
-
 
     sheenContainer.addChild(sheenLine);
 
     sheenLine.addEventListener('tick', cacheContainer);
 
-    function cacheContainer(){
-       sheenContainer.cache(0,0,sheenContainer.getBounds().width, sheenContainer.getBounds().height);
-       sheenLine.cache(0,0,sheenContainer.getBounds().width*2, sheenContainer.getBounds().height*2);
+    function cacheContainer() {
+        sheenContainer.cache(0, 0, sheenContainer.getBounds().width, sheenContainer.getBounds().height);
+        sheenLine.cache(0, 0, sheenContainer.getBounds().width * 2, sheenContainer.getBounds().height * 2);
     }
 
-    createjs.Tween.get(sheenLine).wait(delay).to({alpha:1}).to({x: sheenContainer.x*2}, time, createjs.Ease.sineOut).call(function(){
+    createjs.Tween.get(sheenLine).wait(delay).to({ alpha: 1 }).to({ x: sheenContainer.x * 2 }, time, createjs.Ease.sineOut).call(function() {
         sheenContainer.removeEventListener('tick', cacheContainer, false);
         sheenContainer.parent.removeChild(sheenContainer);
     });
