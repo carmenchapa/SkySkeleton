@@ -195,8 +195,8 @@ function Frame1_CreateItems() {
     frame1_logo = new createjs.Bitmap(queue.getResult('frame1_logo'));
     frame1_image = new createjs.Bitmap(queue.getResult('frame1_image'));
 
-    frame1_container.dynamicTx(frame1_image, frame1_logo, data.frame1_tx_small);
-    // frame1_container.dynamicTx(frame1_image, frame1_logo, data.frame1_tx_small, 10, 10);
+    // frame1_container.dynamicTx(frame1_image, frame1_logo, data.frame1_tx_small);
+    frame1_container.dynamicTx(frame1_image, frame1_logo, data.frame1_tx_small, { y: '1', x: 1 });
 
     frame1_txt = new createjs.Bitmap(queue.getResult('text'));
     frame1_txt.setRegPoints('center', 'center');
@@ -353,10 +353,9 @@ createjs.Container.prototype.setRegPoints = function(regX, regY) {
 
 createjs.Container.prototype.setPositions = createjs.Sprite.prototype.setPositions = createjs.Bitmap.prototype.setPositions;
 
-createjs.Container.prototype.dynamicTx = function(image, logo, text) {
+createjs.Container.prototype.dynamicTx = function(image, logo, text, options) {
     var TXTextContainer = new createjs.Container();
     TXTextContainer.setBounds(0, 0, image.image.width, image.image.height);
-
 
     var TXHtmlElment = document.createElement("p");
     TXHtmlElment.classList.add('txProperties');
@@ -370,18 +369,21 @@ createjs.Container.prototype.dynamicTx = function(image, logo, text) {
     TXTextContainer.addChild(TXTextdomElement, logo);
 
     // POSITION TX AND LOGO TX
-    if (arguments[3] && arguments[4]) {
-        if (typeof arguments[3] !== 'number' || typeof arguments[4] !== 'number') {
-            console.warn('"x" and "y" in dynamicTx() should be numbers');
-        }
-        logo.y = TXTextdomElement.y = TXTextContainer.getBounds().height - TXTextdomElement.getBounds().height - arguments[4];
-        logo.x = TXTextContainer.getBounds().width - logo.image.width - arguments[3];
-        TXTextdomElement.x = -arguments[3];
-    } else if (!arguments[3] && !arguments[4]) {
-        logo.y = TXTextdomElement.y = TXTextContainer.getBounds().height - TXTextdomElement.getBounds().height - 4;
-        logo.x = TXTextContainer.getBounds().width - logo.image.width - 6;
-        TXTextdomElement.x = -6;
+    if (!options) options = {};
+
+    if ((options['x'] && options['y']) && (typeof options['x'] !== 'number' || typeof options['y'] !== 'number')) {
+        options['x'] = null;
+        options['y'] = null;
+        console.warn('"x" and "y" in dynamicTx() should be numbers');
     }
+
+    if (typeof options['x'] !== 'number') options['x'] = 6;
+    if (typeof options['y'] !== 'number') options['y'] = 4;
+
+    logo.y = TXTextdomElement.y = TXTextContainer.getBounds().height - TXTextdomElement.getBounds().height - options['y'];
+    logo.x = TXTextContainer.getBounds().width - logo.image.width - options['x'];
+    TXTextdomElement.x = -options['x'];
+
 
     imageContainer = new createjs.Container();
     imageContainer.setBounds(0, 0, canvasWidth, canvasHeight);
@@ -411,7 +413,7 @@ createjs.Bitmap.prototype.sheen = function(delay, time) {
     sheenLine.x = -sheenContainer.getBounds().width * 2;
 
     if (typeof arguments[2] === 'boolean' && arguments[2] === false) {
-        sheenLine.graphics.beginFill('white').drawRect(0, 0, 10, this.image.height * 2);
+        sheenLine.graphics.beginFill('#fff').drawRect(0, 0, 10, this.image.height * 2);
         sheenLine.rotation = 18;
         sheenLine.y = -10;
         sheenLine.cache(0, 0, this.image.width * 2, this.image.height * 2);
